@@ -48,24 +48,25 @@ def prettifier(url):
 			listComFin.append(fullform)
 
 	for tupla in zip(listPermFin, listComFin):
-		#print("Para  --> %s\n" % tupla[0][0])
-		print("#"*30)
-		print("#" + (" "*12) + tupla[0][0] + (" "*(30-(14+len(tupla[0][0])))) + "#")
-		print("#"*30)
-		print("\n")
-		for com in tupla[1]:
-			comm = re.sub("\$", "\\\$", com)
-			print(os.popen('''echo "%s" 2>/dev/null | sed 's/\&quot;/\"/g' | sed 's/\&gt;/\>/g' | sed 's/\&lt;/\</g' | sed 's/\&amp/\&/g' | sed 's/\&nbsp;/\s/g' | sed "s/\&#39;/\'/g" | sed "s/\&;/\&/g" ''' % comm).read())
-		print("\n")
+		if(sys.argv[2] in tupla[0]):
+			print("#"*30)
+			print("#" + (" "*12) + tupla[0][0] + (" "*(30-(14+len(tupla[0][0])))) + "#")
+			print("#"*30)
+			print("\n")
+			for com in tupla[1]:
+				comm = re.sub("\$", "\\\$", com)
+				print(os.popen('''echo "%s" 2>/dev/null | sed 's/\&quot;/\"/g' | sed 's/\&gt;/\>/g' | sed 's/\&lt;/\</g' | sed 's/\&amp/\&/g' | sed 's/\&nbsp;/\s/g' | sed "s/\&#39;/\'/g" | sed "s/\&;/\&/g" ''' % comm).read())
+			print("\n")
 
 #Main flow
 if __name__ == '__main__':
 	os.system("clear")
 	banner()
 	print("\n\n")
-	if (len(sys.argv) != 2):
-		print("\n\n[*] Mala especificación de comandos: python3 %s <function>" % sys.argv[0])
-		print("[*] Ejemplo: python3 %s awk" % sys.argv[0])
+	if (len(sys.argv) != 3):
+		print("\n\n[*] Mala especificación de comandos: python3 %s <function> <perm>\n" % sys.argv[0])
+		print("[*] Ejemplo: python3 %s awk sudo" % sys.argv[0])
+		print('[*] Ejemplo: python3 %s awk "File write"\n' % sys.argv[0])
 		print("[*] Saliendo...")
 		sys.exit(1)
 	else:
